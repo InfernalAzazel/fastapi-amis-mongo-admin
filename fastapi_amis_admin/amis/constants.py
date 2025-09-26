@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class ProgressEnum(str, Enum):
-    """Progressbar Mode"""
+    """进度条模式"""
 
     line = "click"
     circle = "circle"
@@ -10,7 +10,7 @@ class ProgressEnum(str, Enum):
 
 
 class BarcodeEnum(str, Enum):
-    """Barcode Format"""
+    """条形码格式"""
 
     auto = "auto"  # CODE128
     pharmacode = "pharmacode"
@@ -34,6 +34,9 @@ class BarcodeEnum(str, Enum):
 
 
 class StepStatusEnum(str, Enum):
+    """
+    步骤状态
+    """
     wait = "wait"
     process = "process"
     finish = "finish"
@@ -41,7 +44,7 @@ class StepStatusEnum(str, Enum):
 
 
 class TriggerEnum(str, Enum):
-    """Trigger Type"""
+    """触发器类型"""
 
     click = "click"
     hover = "hover"
@@ -49,7 +52,7 @@ class TriggerEnum(str, Enum):
 
 
 class PlacementEnum(str, Enum):
-    """Placement Position"""
+    """放置位置"""
 
     top = "top"
     left = "left"
@@ -58,7 +61,7 @@ class PlacementEnum(str, Enum):
 
 
 class LevelEnum(str, Enum):
-    """Button level"""
+    """按钮级别"""
 
     primary = "primary"
     secondary = "secondary"
@@ -73,7 +76,7 @@ class LevelEnum(str, Enum):
 
 
 class SizeEnum(str, Enum):
-    """Window size"""
+    """窗口大小"""
 
     xs = "xs"
     sm = "sm"
@@ -84,7 +87,7 @@ class SizeEnum(str, Enum):
 
 
 class DisplayModeEnum(str, Enum):
-    """Form display mode"""
+    """表单显示模式"""
 
     normal = "normal"  # normal mode
     horizontal = "horizontal"  # horizontal mode
@@ -92,7 +95,7 @@ class DisplayModeEnum(str, Enum):
 
 
 class LabelEnum(str, Enum):
-    """Label style"""
+    """标签样式"""
 
     primary = "primary"
     success = "success"
@@ -103,17 +106,17 @@ class LabelEnum(str, Enum):
 
 
 class StatusEnum(str, Enum):
-    """Default state"""
+    """默认状态"""
 
-    success = "success"  # success
-    fail = "fail"  # fail
-    pending = "pending"  # running
-    queue = "queue"  # in queue
-    schedule = "schedule"  # scheduling
+    success = "success"
+    fail = "fail"
+    pending = "pending"
+    queue = "queue"
+    schedule = "schedule"
 
 
 class TabsModeEnum(str, Enum):
-    """Tab mode"""
+    """选项卡模式"""
 
     line = "line"
     card = "card"
@@ -124,4 +127,5 @@ class TabsModeEnum(str, Enum):
     strong = "strong"
     tiled = "tiled"
     sidebar = "sidebar"
-    collapse = "collapse"  # collapse 容器, 用于将多个页面展示为折叠器.
+    collapse = "collapse"
+    """collapse 容器, 用于将多个页面展示为折叠器"""

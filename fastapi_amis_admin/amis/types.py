@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Dict, Any, Union, List, Literal, Optional
 from jinja2 import Environment, FileSystemLoader
-from pydantic import BaseModel, ConfigDict, SerializeAsAny
+from pydantic import BaseModel, ConfigDict
 
 Expression = str
 DataMapping = str
@@ -125,7 +125,7 @@ class Tpl(AmisNode):
     className: Optional[str] = None
     """外层 Dom 的类名"""
 
-    tpl: SerializeAsAny[Optional[Template]] = None
+    tpl: Optional[Template] = None
     """配置模板"""
 
     showNativeTitle: Optional[bool] = None
@@ -159,18 +159,18 @@ class BasePage(BaseAmisModel):
             template_path: str = "",
             locale: str = "zh_CN",
             cdn: str = "https://unpkg.com",
-            pkg: str = "amis@1.10.2",
+            pkg: str = "amis@6.13.0",
             site_title: str = "Amis",
             site_icon: str = "",
             theme: str = "cxd",
     ):
-        """Render html template"""
+        """渲染 html 模板"""
         env = Environment(loader=FileSystemLoader(Path(__file__).parent / 'templates'))
         template_path = template_path or self.__default_template_path__
 
         return env.get_template(template_path).render(
             {
-                "AmisSchemaJson": self.json(),
+                "AmisSchemaJson": self.to_json(),
                 "locale": locale.replace("_", "-"),  # Fix #50
                 "cdn": cdn,
                 "pkg": pkg,
