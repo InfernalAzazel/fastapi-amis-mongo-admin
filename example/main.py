@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi_amis_admin.amis.components import App, PageSchema, Page
+from fastapi_amis_admin.amis.components import App, PageSchema, Page, Grid, Container, Card, Button, Tpl, Form, InputText, InputNumber, Select, Checkboxes, Table
 
 
 app = FastAPI()
@@ -20,66 +20,54 @@ def get_app_config():
         icon="fa fa-home",
         url="/",
         isDefaultPage=True,
-        schema={
-            "type": "page",
-            "title": "欢迎页面",
-            "body": {
-                "type": "container",
-                "body": [
-                    {
-                        "type": "tpl",
-                        "tpl": "<h1>欢迎使用 FastAPI Amis 多页面应用</h1><p>这是一个使用 APageSchema 的示例应用</p>"
-                    },
-                    {
-                        "type": "grid",
-                        "columns": [
-                            {
-                                "type": "card",
-                                "header": {
-                                    "title": "表单页面",
-                                    "subTitle": "用户信息表单"
-                                },
-                                "body": {
-                                    "type": "button",
-                                    "label": "访问表单页面",
-                                    "level": "primary",
-                                    "actionType": "url",
-                                    "url": "/form"
-                                }
-                            },
-                            {
-                                "type": "card", 
-                                "header": {
+        schema=Page(
+            title="欢迎页面",
+            body=Container(
+                body=[
+                    Tpl(tpl="<h1>欢迎使用 FastAPI Amis 多页面应用</h1><p>这是一个使用 Page、Grid、Container 组件的示例应用</p>"),
+                    Grid(
+                        columns=[
+                            Card(
+                                header=Card.Header(
+                                    title="表单页面",
+                                    subTitle="用户信息表单"
+                                ),
+                                body=Button(
+                                    label="访问表单页面",
+                                    level="primary",
+                                    actionType="url",
+                                    url="/form"
+                                )
+                            ),
+                            Card(
+                                header={
                                     "title": "表格页面",
                                     "subTitle": "数据展示表格"
                                 },
-                                "body": {
-                                    "type": "button",
-                                    "label": "访问表格页面",
-                                    "level": "success",
-                                    "actionType": "url",
-                                    "url": "/table"
-                                }
-                            },
-                            {
-                                "type": "card",
-                                "header": {
+                                body=Button(
+                                    label="访问表格页面",
+                                    level="success",
+                                    actionType="url",
+                                    url="/table"
+                                )
+                            ),
+                            Card(
+                                header={
                                     "title": "卡片页面", 
                                     "subTitle": "信息卡片展示"
                                 },
-                                "body": {
-                                    "type": "button",
-                                    "label": "访问卡片页面",
-                                    "level": "info",
-                                    "actionType": "url",
-                                    "url": "/cards"
-                                }
-                            }
+                                body=Button(
+                                    label="访问卡片页面",
+                                    level="info",
+                                    actionType="url",
+                                    url="/cards"
+                                )
+                            )
                         ]
-                    }
+                    )
                 ]
-            }
-        }
+            )
+        )
     )
     
     # 创建表单页面
@@ -87,63 +75,57 @@ def get_app_config():
         label="表单页面",
         icon="fa fa-edit",
         url="/form",
-        schema={
-            "type": "page",
-            "title": "用户信息表单",
-            "body": {
-                "type": "form",
-                "mode": "horizontal",
-                "api": "/api/saveForm",
-                "body": [
-                    {
-                        "label": "姓名",
-                        "type": "input-text",
-                        "name": "name",
-                        "required": True,
-                        "placeholder": "请输入您的姓名"
-                    },
-                    {
-                        "label": "邮箱",
-                        "type": "input-email",
-                        "name": "email",
-                        "required": True,
-                        "placeholder": "请输入您的邮箱"
-                    },
-                    {
-                        "label": "年龄",
-                        "type": "input-number",
-                        "name": "age",
-                        "min": 1,
-                        "max": 120
-                    },
-                    {
-                        "label": "性别",
-                        "type": "select",
-                        "name": "gender",
-                        "options": [
+        schema=Page(
+            title="用户信息表单",
+            body=Form(
+                mode="horizontal",
+                api="/api/saveForm",
+                body=[
+                    InputText(
+                        label="姓名",
+                        name="name",
+                        required=True,
+                        placeholder="请输入您的姓名"
+                    ),
+                    InputText(
+                        type='input-email',
+                        label="邮箱",
+                        name="email",
+                        required=True,
+                        placeholder="请输入您的邮箱"
+                    ),
+                    InputNumber(
+                        label="年龄",
+                        name="age",
+                        min=1,
+                        max=120
+                    ),
+                    Select(
+                        label="性别",
+                        name="gender",
+                        options=[
                             {"label": "男", "value": "male"},
                             {"label": "女", "value": "female"}
                         ]
-                    },
-                    {
-                        "label": "爱好",
-                        "type": "checkboxes",
-                        "name": "hobbies",
-                        "options": [
+                    ),
+                    Checkboxes(
+                        label="爱好",
+                        name="hobbies",
+                        options=[
                             {"label": "读书", "value": "reading"},
                             {"label": "运动", "value": "sports"},
                             {"label": "音乐", "value": "music"},
                             {"label": "旅行", "value": "travel"}
                         ]
-                    },
-                    {
-                        "type": "submit",
-                        "label": "提交",
-                        "level": "primary"
-                    }
+                    ),
+                    Button(
+                        type="submit",
+                        label="提交",
+                        level="primary"
+                    )
                 ]
-            }
-        }
+            )
+        )
     )
     
     # 创建表格页面
@@ -151,13 +133,10 @@ def get_app_config():
         label="表格页面",
         icon="fa fa-table",
         url="/table",
-        schema={
-            "type": "page",
-            "title": "用户数据表格",
-            "body": {
-                "type": "table",
-                "api": "/api/users",
-                "columns": [
+        schema=Page(
+            title="用户数据表格",
+            body=Table(
+                columns=[
                     {
                         "name": "id",
                         "label": "ID",
@@ -205,47 +184,29 @@ def get_app_config():
                         ]
                     }
                 ]
-            }
-        }
+            )
+        )
     )
     
 
-    print(home_page.as_page_body())
     # 设置页面列表
     amis_app.pages = [
-        # home_page.model_dump(exclude_none=True),
-       {
-          "children": [
-            {
-              "label": "子页面",
-              "url": "/",
-              "schema": {
-                "type": "page",
-                "title": "Page A"
-              }
-            }
-          ]
-        },
-
         PageSchema(
             children=[
                 PageSchema(
                     label="卡片页面",
                     icon="fa fa-th-large",
                     url="/cards",
-                    schema={
-                        "type": "page",
-                        "title": "信息卡片展示",
-                        "body": {
-                            "type": "grid",
-                            "columns": [
-                                {
-                                    "type": "card",
-                                    "header": {
+                    schema=Page(
+                        title="信息卡片展示",
+                        body=Grid(
+                            columns=[
+                                Card(
+                                    header={
                                         "title": "系统信息",
                                         "subTitle": "当前系统状态"
                                     },
-                                    "body": {
+                                    body={
                                         "type": "property",
                                         "items": [
                                             {"label": "系统版本", "content": "FastAPI Amis v1.0"},
@@ -254,14 +215,13 @@ def get_app_config():
                                             {"label": "CPU使用", "content": "12%"}
                                         ]
                                     }
-                                },
-                                {
-                                    "type": "card",
-                                    "header": {
+                                ),
+                                Card(
+                                    header={
                                         "title": "用户统计",
                                         "subTitle": "用户数据概览"
                                     },
-                                    "body": {
+                                    body={
                                         "type": "property",
                                         "items": [
                                             {"label": "总用户数", "content": "1,234"},
@@ -270,38 +230,34 @@ def get_app_config():
                                             {"label": "在线用户", "content": "67"}
                                         ]
                                     }
-                                },
-                                {
-                                    "type": "card",
-                                    "header": {
+                                ),
+                                Card(
+                                    header={
                                         "title": "快速操作",
                                         "subTitle": "常用功能入口"
                                     },
-                                    "body": {
-                                        "type": "grid",
-                                        "columns": [
+                                    body=Grid(
+                                        columns=[
                                             {
-                                                "body": {
-                                                    "type": "button",
-                                                    "label": "添加用户",
-                                                    "level": "primary",
-                                                    "size": "sm"
-                                                }
+                                                "body": Button(
+                                                    label="添加用户",
+                                                    level="primary",
+                                                    size="sm"
+                                                )
                                             },
                                             {
-                                                "body": {
-                                                    "type": "button",
-                                                    "label": "导出数据",
-                                                    "level": "success",
-                                                    "size": "sm"
-                                                }
+                                                "body": Button(
+                                                    label="导出数据",
+                                                    level="success",
+                                                    size="sm"
+                                                )
                                             }
                                         ]
-                                    }
-                                }
+                                    )
+                                )
                             ]
-                        }
-                    }
+                        )
+                    )
                 )
             ]
         ),
@@ -382,6 +338,6 @@ async def get_users():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=3000, reload=True)
+    uvicorn.run(app, host="0.0.0.0", port=3000)
 
 # uvicorn example.main:app --host 0.0.0.0 --port 3000 --reload

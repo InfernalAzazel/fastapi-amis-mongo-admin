@@ -1062,6 +1062,9 @@ class Button(AmisNode):
     className: Optional[str] = None
     """指定添加 button 类名"""
 
+    label: Optional[str] = None
+    """button 名称"""
+
     url: Optional[str] = None
     """点击跳转的地址，指定此属性 button 的行为和 a 链接一致"""
 
@@ -6978,10 +6981,10 @@ class Card(AmisNode):
     href: Optional[Template] = None
     """外部链接"""
 
-    header: Optional[Header] = None
+    header: Optional[Union[Header, Dict]] = None
     """Card 头部内容设置"""
 
-    body: Optional[list] = None
+    body: Optional[SchemaNode] = None
     """内容容器，主要用来放置非表单项组件"""
 
     bodyClassName: Optional[str] = None
